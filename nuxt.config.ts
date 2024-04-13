@@ -15,4 +15,9 @@ export default defineNuxtConfig({
       "DM Sans": true,
     },
   },
+  runtimeConfig: {
+    public: {
+      API_ENDPOINT: process.env.API_ENDPOINT,
+    },
+  },
 })
