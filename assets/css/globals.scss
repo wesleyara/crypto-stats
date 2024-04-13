@@ -40,3 +40,17 @@ body {
 .btn.fill {
   @apply border border-[#334155] bg-transparent text-white;
 }
+
+input {
+  @apply bg-white px-4 py-2 text-black outline-none;
+}
+
+select {
+  @apply bg-[#ebebeb] px-4 py-2 text-black outline-none;
+}
+
+@media screen and (max-width: 400px) {
+  .width-full {
+    width: 100%;
+  }
+}
