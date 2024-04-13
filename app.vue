@@ -1,8 +1,8 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: "BitStats",
+  title: "CryptoStats",
   description: "A simple way to track your Cryptocurrency stats",
-  ogTitle: "BitStats",
+  ogTitle: "CryptoStats",
   ogDescription: "A simple way to track your Cryptocurrency stats",
   ogImage: "https://wesleyaraujo.dev/favicon.png",
   ogImageUrl: "https://wesleyaraujo.dev/favicon.png",
