@@ -1,0 +1,42 @@
+:root {
+  --mirage-50: #f0f7fe;
+  --mirage-100: #deecfb;
+  --mirage-200: #c4e0f9;
+  --mirage-300: #9cccf4;
+  --mirage-400: #6dafed;
+  --mirage-500: #4b90e6;
+  --mirage-600: #3674da;
+  --mirage-700: #2d60c8;
+  --mirage-800: #2a4fa3;
+  --mirage-900: #274481;
+  --mirage-950: #0f172a;
+
+  --emerald-50: #edfff7;
+  --emerald-100: #d5ffee;
+  --emerald-200: #aeffde;
+  --emerald-300: #70ffc6;
+  --emerald-400: #2bfda7;
+  --emerald-500: #00dc82;
+  --emerald-600: #00c06d;
+  --emerald-700: #009658;
+  --emerald-800: #067549;
+  --emerald-900: #07603e;
+  --emerald-950: #003721;
+}
+
+body {
+  background-color: var(--mirage-950);
+  color: #fff;
+}
+
+.home-content {
+  height: calc(100dvh - 76px);
+}
+
+.btn {
+  @apply flex items-center justify-center gap-1 rounded-md bg-emerald-500 px-4 py-2 text-lg font-normal text-black;
+}
+
+.btn.fill {
+  @apply border border-[#334155] bg-transparent text-white;
+}
