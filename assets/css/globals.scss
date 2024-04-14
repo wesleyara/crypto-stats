@@ -45,6 +45,14 @@ input {
   @apply bg-white px-4 py-2 text-black outline-none;
 }
 
+input[type="datetime-local"] {
+  @apply bg-white px-4 py-2 text-black outline-none;
+  /* altere a cor do icone para black */
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
+
 select {
   @apply bg-[#ebebeb] px-4 py-2 text-black outline-none;
 }

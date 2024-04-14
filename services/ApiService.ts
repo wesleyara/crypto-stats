@@ -6,13 +6,15 @@ export class ApiService {
 
   getCurrentPrice = async ({
     coin_id,
+    dateStr
   }: GetCurrentPriceProps): Promise<GetCurrentPriceResponse> => {
     try {
       if (!coin_id) {
         throw new Error("Invalid coin_id");
       }
 
-      const dateString = this.formatService.getCurrentDate();
+      const dateString = dateStr || this.formatService.getCurrentDate();
+      console.log(dateString);
       const { timestamp, timestampLessTenMinutes, timestampMoreTenMinutes } =
         this.formatService.getTimestampFromDate(dateString);
 

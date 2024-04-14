@@ -18,6 +18,8 @@ const outputSelectCurrencyValue = ref("USD");
 
 const inputCurrency = ref("1");
 const outputCurrency = ref("0");
+const dateInput = ref("");
+const hourInput = ref("");
 const data = ref<ConvertedMarketChartData | null>(
   {} as ConvertedMarketChartData,
 );
@@ -60,25 +62,65 @@ const handleCurrencyChange = async (event: Event) => {
     data.value = response;
   }
 };
+
+const handleDateChange = async (event: Event) => {
+  const value = (event.target as HTMLDataElement).value;
+
+  const date = new Date(value);
+
+  if (date > new Date()) {
+    dateInput.value = formatService.getCurrentDate();
+    return alert("Please select a date in the past");
+  }
+
+  dateInput.value = value;
+  const response = await apiService.getCurrentPrice({
+    coin_id: inputSelectCurrencyValue.value,
+    dateStr: value,
+  });
+
+  outputCurrency.value = (response?.price).toLocaleString() || "1";
+  data.value = response;
+};
 </script>
 
 <template>
   <section id="converter" class="bg-big-stone-900">
     <div class="window-width mx-auto flex flex-col items-center py-10">
       <h2 class="mb-10">Currency Converter</h2>
-      <h4>
-        {{
-          coinList.find(item => inputSelectCurrencyValue === item.value)?.label
-        }}/{{ outputSelectCurrencyValue }}
-      </h4>
-      <span class="text-center">
-        {{ inputCurrency.toLocaleString() }}
-        {{
-          coinList.find(item => inputSelectCurrencyValue === item.value)?.label
-        }}
-        is equivalent to
-        {{ outputCurrency.toLocaleString() }}
-        {{ outputSelectCurrencyValue }}
+
+      <span class="flex w-full items-center justify-center gap-5 sm:gap-10 sm:flex-row flex-col">
+        <span class="flex flex-col gap-2 text-center sm:text-start">
+          <h4>
+            {{
+              coinList.find(item => inputSelectCurrencyValue === item.value)
+                ?.label
+            }}/{{ outputSelectCurrencyValue }}
+          </h4>
+          <span class="text-center">
+            {{ inputCurrency.toLocaleString() }}
+            {{
+              coinList.find(item => inputSelectCurrencyValue === item.value)
+                ?.label
+            }}
+            is equivalent to
+            {{ outputCurrency.toLocaleString() }}
+            {{ outputSelectCurrencyValue }}
+          </span>
+        </span>
+
+        <span class="flex flex-col">
+          Select a date:
+
+          <span class="flex gap-1">
+            <input
+              class="rounded-md bg-[#ebebeb]"
+              type="datetime-local"
+              @change="handleDateChange"
+              v-model="dateInput"
+            />
+          </span>
+        </span>
       </span>
 
       <div

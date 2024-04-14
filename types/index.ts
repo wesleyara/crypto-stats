@@ -11,6 +11,7 @@ export interface ConvertedMarketChartData {
 
 export interface GetCurrentPriceProps {
   coin_id: string;
+  dateStr?: string;
 }
 
 export interface GetCurrentPriceResponse extends ConvertedMarketChartData {
