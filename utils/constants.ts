@@ -20,3 +20,14 @@ export const coinList = [
     value: "cosmos",
   }
 ];
+
+export const linkMap = [
+  {
+    label: "Home",
+    href: "home",
+  },
+  {
+    label: "Converter",
+    href: "converter",
+  },
+]
