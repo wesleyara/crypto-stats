@@ -1,6 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-  <TheHeader />
-  <Converter />
+  <div class="flex flex-col gap-10">
+    <TheHeader />
+    <HomeFrame />
+    <Converter />
+  </div>
 </template>
