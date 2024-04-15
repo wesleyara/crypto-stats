@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { coinList } from "~/utils/constants";
-import { ApiService } from "~/services/ApiService";
-import { FormatService } from "~/services/FormatService";
-import type { ConvertedMarketChartData } from "~/types";
-// import { type CryptoData } from "~/types";
-// const runtimeConfig = useRuntimeConfig();
-
-// const { data, pending, error } = await useFetch<CryptoData>(
-//   runtimeConfig.public.API_ENDPOINT + "/coins/bitcoin/history?date=13-04-2024"
-// );
+import { coinList } from "../utils/constants";
+import { ApiService } from "../services/ApiService";
+import { FormatService } from "../services/FormatService";
+import type { ConvertedMarketChartData } from "../types";
 
 const apiService = new ApiService();
 const formatService = new FormatService();
@@ -63,6 +57,18 @@ const handleCurrencyChange = async (event: Event) => {
   }
 };
 
+// crie um teste para a função acima:
+// test("handleCurrencyChange", async () => {
+//   const event = {
+//     target: {
+//       value: "bitcoin",
+//       name: "inputSelectCurrencyValue",
+//     },
+//   } as unknown as Event;
+//   await handleCurrencyChange(event);
+//   expect(inputSelectCurrencyValue.value).toBe("bitcoin");
+// });
+
 const handleDateChange = async (event: Event) => {
   const value = (event.target as HTMLDataElement).value;
 
@@ -93,18 +99,18 @@ const handleDateChange = async (event: Event) => {
         <span class="flex flex-col gap-2 text-center sm:text-start">
           <h4>
             {{
-              coinList.find(item => inputSelectCurrencyValue === item.value)
+              coinList?.find(item => inputSelectCurrencyValue === item.value)
                 ?.label
             }}/{{ outputSelectCurrencyValue }}
           </h4>
           <span class="text-center">
-            {{ inputCurrency.toLocaleString() }}
+            {{ inputCurrency?.toLocaleString() }}
             {{
-              coinList.find(item => inputSelectCurrencyValue === item.value)
+              coinList?.find(item => inputSelectCurrencyValue === item.value)
                 ?.label
             }}
             is equivalent to
-            {{ outputCurrency.toLocaleString() }}
+            {{ outputCurrency?.toLocaleString() }}
             {{ outputSelectCurrencyValue }}
           </span>
         </span>
@@ -172,7 +178,7 @@ const handleDateChange = async (event: Event) => {
 
       <span class="my-10">
         Last Update:
-        {{ formatService.formatDate(data?.timestamp || Date.now()) }}
+        {{ formatService?.formatDate(data?.timestamp || Date.now()) }}
       </span>
     </div>
   </section>

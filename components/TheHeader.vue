@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { linkMap } from "~/utils/constants";
+import { linkMap } from "../utils/constants";
 
 const handleScrollToId = (id: string) => {
   const element = document.getElementById(id);
