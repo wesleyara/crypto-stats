@@ -12,7 +12,6 @@ const show = ref(false);
     <NuxtImg
       src="/ilustration.webp"
       alt="A crypto ilustration"
-      loading="lazy"
       width="640"
       height="587"
       class="w-[300px] rounded-lg sm:w-[640px]"
