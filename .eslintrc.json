@@ -12,7 +12,7 @@
     "@nuxtjs/eslint-config-typescript",
     "plugin:prettier/recommended"
   ],
-  "plugins": [],
+  "plugins": ["vitest"],
   "rules": {
     "vue/multi-word-component-names": "off"
   }
