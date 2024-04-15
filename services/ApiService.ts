@@ -28,7 +28,7 @@ export class ApiService {
       const response = await fetch(url);
       const data = await response.json();
 
-      const prices = this.formatService.convertToObjects(data.prices);
+      const prices = this.formatService.convertArrayToObjects(data.prices);
       const closestPrice = this.formatService.findClosestTimestamp(
         prices,
         timestamp,

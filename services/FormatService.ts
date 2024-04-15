@@ -1,7 +1,7 @@
 import type { ConvertedMarketChartData, MarketChartData } from "~/types";
 
 export class FormatService {
-  convertToObjects = (
+  convertArrayToObjects = (
     array: MarketChartData["prices"],
   ): ConvertedMarketChartData[] => {
     return array.map(([timestamp, price]) => ({ timestamp, price }));
