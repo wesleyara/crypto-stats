@@ -138,6 +138,7 @@ const handleClear = async () => {
             <input
               class="rounded-md bg-[#ebebeb]"
               name="dateInput"
+              id="dateInput"
               type="datetime-local"
               @change="handleDateChange"
               v-model="dateInput"
@@ -160,6 +161,7 @@ const handleClear = async () => {
           <select
             class="flex w-[100px] items-center justify-center rounded-l"
             name="inputSelectCurrencyValue"
+            aria-label="Select currency"
             @change="handleCurrencyChange"
             :value="inputSelectCurrencyValue"
           >
@@ -176,6 +178,7 @@ const handleClear = async () => {
             class="w-full rounded-r"
             type="number"
             name="inputCurrency"
+            aria-label="Input currency"
             v-model="inputCurrency"
             @input="handleValueChange"
           />
@@ -188,6 +191,7 @@ const handleClear = async () => {
             class="w-full rounded-l"
             name="outputCurrency"
             type="number"
+            aria-label="Output currency"
             v-model="outputCurrency"
             @input="handleValueChange"
           />
