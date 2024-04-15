@@ -6,7 +6,7 @@ export class ApiService {
 
   getCurrentPrice = async ({
     coin_id,
-    dateStr
+    dateStr,
   }: GetCurrentPriceProps): Promise<GetCurrentPriceResponse> => {
     try {
       if (!coin_id) {
@@ -15,15 +15,18 @@ export class ApiService {
 
       const dateString = dateStr || this.formatService.getCurrentDate();
       console.log(dateString);
-      const { timestamp, timestampLessTenMinutes, timestampMoreTenMinutes } =
-        this.formatService.getTimestampFromDate(dateString);
+      const {
+        timestamp,
+        timestampLessThirtyMinutes,
+        timestampMoreThirtyMinutes,
+      } = this.formatService.getTimestampFromDate(dateString);
 
       const currentTo =
-        timestampMoreTenMinutes * 1000 > Date.now()
+        timestampMoreThirtyMinutes * 1000 > Date.now()
           ? timestamp / 1000
-          : timestampMoreTenMinutes;
+          : timestampMoreThirtyMinutes;
 
-      const url = `https://api.coingecko.com/api/v3/coins/${coin_id}/market_chart/range?vs_currency=usd&from=${timestampLessTenMinutes}&to=${currentTo}`;
+      const url = `https://api.coingecko.com/api/v3/coins/${coin_id}/market_chart/range?vs_currency=usd&from=${timestampLessThirtyMinutes}&to=${currentTo}`;
 
       const response = await fetch(url);
       const data = await response.json();
@@ -40,7 +43,7 @@ export class ApiService {
 
       return { ...closestPrice, coin_id };
     } catch (error) {
-      console.error(error);
+      console.log(error.message);
       return { timestamp: 0, price: 0, coin_id };
     }
   };

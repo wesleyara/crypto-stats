@@ -38,8 +38,8 @@ describe("FormatService", () => {
 
     expect(object).toEqual({
       timestamp: 1635735600000,
-      timestampLessTenMinutes: 1635735000,
-      timestampMoreTenMinutes: 1635736200,
+      timestampLessThirtyMinutes: 1635734400,
+      timestampMoreThirtyMinutes: 1635736800,
     });
   });
 

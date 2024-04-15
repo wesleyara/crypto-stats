@@ -13,16 +13,33 @@ const outputSelectCurrencyValue = ref("USD");
 const inputCurrency = ref("1");
 const outputCurrency = ref("0");
 const dateInput = ref("");
-const hourInput = ref("");
 const data = ref<ConvertedMarketChartData | null>(
   {} as ConvertedMarketChartData,
 );
 
-onMounted(async () => {
-  const response = await apiService.getCurrentPrice({ coin_id: "bitcoin" });
+const fetchPrice = async () => {
+  const response = await apiService.getCurrentPrice({
+    coin_id: inputSelectCurrencyValue.value,
+  });
+
   if (!response) return;
+
   outputCurrency.value = (response?.price).toLocaleString() || "1";
   data.value = response;
+};
+
+onMounted(async () => {
+  fetchPrice()
+    .then()
+    .catch(err => console.error(err));
+  setInterval(
+    () =>
+      !dateInput &&
+      fetchPrice()
+        .then()
+        .catch(err => console.error(err)),
+    30000,
+  );
 });
 
 const handleValueChange = (event: Event) => {
@@ -57,18 +74,6 @@ const handleCurrencyChange = async (event: Event) => {
   }
 };
 
-// crie um teste para a função acima:
-// test("handleCurrencyChange", async () => {
-//   const event = {
-//     target: {
-//       value: "bitcoin",
-//       name: "inputSelectCurrencyValue",
-//     },
-//   } as unknown as Event;
-//   await handleCurrencyChange(event);
-//   expect(inputSelectCurrencyValue.value).toBe("bitcoin");
-// });
-
 const handleDateChange = async (event: Event) => {
   const value = (event.target as HTMLDataElement).value;
 
@@ -95,7 +100,9 @@ const handleDateChange = async (event: Event) => {
     <div class="window-width mx-auto flex flex-col items-center py-10">
       <h2 class="mb-10">Currency Converter</h2>
 
-      <span class="flex w-full items-center justify-center gap-5 sm:gap-10 sm:flex-row flex-col">
+      <span
+        class="flex w-full flex-col items-center justify-center gap-5 sm:flex-row sm:gap-10"
+      >
         <span class="flex flex-col gap-2 text-center sm:text-start">
           <h4>
             {{
@@ -125,6 +132,13 @@ const handleDateChange = async (event: Event) => {
               @change="handleDateChange"
               v-model="dateInput"
             />
+            <button
+              v-if="dateInput.length > 0"
+              @click="dateInput = ''"
+              class="btn rounded-md px-3 py-2"
+            >
+              Clear
+            </button>
           </span>
         </span>
       </span>

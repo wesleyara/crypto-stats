@@ -36,13 +36,12 @@ export class FormatService {
     const dateObject = new Date(year, month - 1, day, hour, minute);
 
     const dateTimestamp = Math.floor(dateObject.getTime() / 1000);
-    const dateTimestampLessTenMinutes = dateTimestamp - 600;
-    const dateTimestampMoreTenMinutes = dateTimestamp + 600;
-
+    const dateTimestampLessThirtyMinutes = dateTimestamp - 1200;
+    const dateTimestampMoreThirtyMinutes = dateTimestamp + 1200
     return {
       timestamp: dateTimestamp * 1000,
-      timestampMoreTenMinutes: dateTimestampMoreTenMinutes,
-      timestampLessTenMinutes: dateTimestampLessTenMinutes,
+      timestampMoreThirtyMinutes: dateTimestampMoreThirtyMinutes,
+      timestampLessThirtyMinutes: dateTimestampLessThirtyMinutes,
     };
   };
 
