@@ -1,8 +1,6 @@
-import { FormatService } from "../../services/FormatService";
+import { convertArrayToObjects, findClosestTimestamp, formatDate, getCurrentDate, getTimestampFromDate } from "../../utils";
 
 describe("FormatService", () => {
-  const formatService = new FormatService();
-
   it("format number to currency", () => {
     const mock = [
       [1635734400000, 0.0],
@@ -10,7 +8,7 @@ describe("FormatService", () => {
       [1635907200000, 0.0],
       [1635993600000, 0.0],
     ];
-    const object = formatService.convertArrayToObjects(mock);
+    const object = convertArrayToObjects(mock);
 
     expect(object).toEqual([
       { timestamp: 1635734400000, price: 0 },
@@ -27,14 +25,14 @@ describe("FormatService", () => {
       { timestamp: 1635907200000, price: 0 },
       { timestamp: 1635993600000, price: 0 },
     ];
-    const object = formatService.findClosestTimestamp(mock, 1635820800000);
+    const object = findClosestTimestamp(mock, 1635820800000);
 
     expect(object).toEqual({ timestamp: 1635820800000, price: 0 });
   });
 
   it("get timestamp from date", () => {
     const mock = "2021-11-01T00:00";
-    const object = formatService.getTimestampFromDate(mock);
+    const object = getTimestampFromDate(mock);
 
     expect(object).toEqual({
       timestamp: 1635735600000,
@@ -45,14 +43,14 @@ describe("FormatService", () => {
 
   it("get current date", () => {
     const mock = new Date("2021-11-01T00:00");
-    const object = formatService.getCurrentDate(mock);
+    const object = getCurrentDate(mock);
 
     expect(object).toEqual("2021-11-01T00:00");
   });
 
   it("format date", () => {
     const mock = 1635734400000;
-    const object = formatService.formatDate(mock);
+    const object = formatDate(mock);
 
     expect(object).toEqual("31/10/2021, 23:40");
   });

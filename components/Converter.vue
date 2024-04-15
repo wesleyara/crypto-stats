@@ -1,48 +1,34 @@
 <script setup lang="ts">
 import { coinList } from "../utils/constants";
-import { ApiService } from "../services/ApiService";
-import { FormatService } from "../services/FormatService";
+import { getCurrentDate, formatDate } from "../utils";
 import type { ConvertedMarketChartData } from "../types";
 
-const toast = useToast();
-
-const apiService = new ApiService();
-const formatService = new FormatService();
+// const toast = useToast();
 
 const inputSelectCurrencyValue = ref("bitcoin");
 const outputSelectCurrencyValue = ref("USD");
 
 const inputCurrency = ref(1);
 const outputCurrency = ref(0);
+
 const dateInput = ref("");
-const data = ref<ConvertedMarketChartData | null>(
-  {} as ConvertedMarketChartData,
+const params = ref({ id: inputSelectCurrencyValue, date: dateInput });
+
+const { data, pending, error } = useFetch<ConvertedMarketChartData>(
+  `/api/market`,
+  {
+    params,
+    watch: [params],
+  },
 );
 
-const fetchPrice = async () => {
-  const response = await apiService.getCurrentPrice({
-    coin_id: inputSelectCurrencyValue.value,
-    toast,
-  });
+const lastUpdate = ref(formatDate(data.value?.timestamp || Date.now()));
 
-  if (!response) return;
-
-  outputCurrency.value = response?.price || 0;
-  data.value = response;
-};
-
-onMounted(async () => {
-  fetchPrice()
-    .then()
-    .catch(err => console.error(err));
-  setInterval(
-    () =>
-      dateInput.value.length === 0 &&
-      fetchPrice()
-        .then()
-        .catch(err => console.error(err)),
-    30000,
-  );
+watchEffect(() => {
+  if (data.value) {
+    inputCurrency.value = 1;
+    outputCurrency.value = data.value.price;
+  }
 });
 
 const handleValueChange = (event: Event) => {
@@ -56,7 +42,7 @@ const handleValueChange = (event: Event) => {
     outputCurrency.value = +value * data.value.price;
   } else {
     outputCurrency.value = +value;
-    inputCurrency.value = +value / data.value.price
+    inputCurrency.value = +value / data.value.price;
   }
 };
 
@@ -66,13 +52,6 @@ const handleCurrencyChange = async (event: Event) => {
 
   if (name === "inputSelectCurrencyValue") {
     inputSelectCurrencyValue.value = value;
-    const response = await apiService.getCurrentPrice({
-      coin_id: value,
-      toast,
-    });
-
-    outputCurrency.value = response?.price || 0
-    data.value = response;
   }
 };
 
@@ -82,25 +61,16 @@ const handleDateChange = async (event: Event) => {
   const date = new Date(value);
 
   if (date > new Date()) {
-    dateInput.value = formatService.getCurrentDate();
+    dateInput.value = getCurrentDate();
     return alert("Please select a date in the past");
   }
 
   dateInput.value = value;
-  const response = await apiService.getCurrentPrice({
-    coin_id: inputSelectCurrencyValue.value,
-    toast,
-    dateStr: value,
-  });
-
-  outputCurrency.value = response?.price || 0;
-  data.value = response;
 };
 
 const handleClear = async () => {
   dateInput.value = "";
   inputCurrency.value = 1;
-  await fetchPrice();
 };
 </script>
 
@@ -144,9 +114,9 @@ const handleClear = async () => {
               v-model="dateInput"
             />
             <button
-              v-if="dateInput.length > 0"
+              v-if="dateInput?.length > 0"
               @click="handleClear"
-              class="btn rounded-md px-3 py-2"
+              class="rounded-md px-3 py-2 bg-emerald-500 text-black"
             >
               Clear
             </button>
@@ -206,7 +176,7 @@ const handleClear = async () => {
 
       <span class="my-10">
         Last Update:
-        {{ formatService?.formatDate(data?.timestamp || Date.now()) }}
+        {{ lastUpdate }}
       </span>
     </div>
   </section>

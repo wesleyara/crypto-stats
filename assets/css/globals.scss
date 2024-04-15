@@ -29,18 +29,6 @@ body {
   color: #fff;
 }
 
-.home-content {
-  height: calc(100dvh - 76px);
-}
-
-.btn {
-  @apply flex items-center justify-center gap-1 rounded-md bg-emerald-500 px-4 py-2 text-lg font-normal text-black;
-}
-
-.btn.fill {
-  @apply border border-[#334155] bg-transparent text-white;
-}
-
 .dropdown {
   @apply cursor-pointer;
 }
