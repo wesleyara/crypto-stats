@@ -6,15 +6,16 @@ export class ApiService {
 
   getCurrentPrice = async ({
     coin_id,
+    toast,
     dateStr,
   }: GetCurrentPriceProps): Promise<GetCurrentPriceResponse> => {
     try {
       if (!coin_id) {
+        toast.add({ title: "error", description: "Invalid coin_id" });
         throw new Error("Invalid coin_id");
       }
 
       const dateString = dateStr || this.formatService.getCurrentDate();
-      console.log(dateString);
       const {
         timestamp,
         timestampLessThirtyMinutes,
@@ -38,13 +39,15 @@ export class ApiService {
       );
 
       if (!closestPrice) {
+        toast.add({ title: "error", description: "No data found" });
         throw new Error("No data found");
       }
 
-      return { ...closestPrice, coin_id };
-    } catch (error) {
+      return { ...closestPrice, coin_id, error: null };
+    } catch (error: any) {
       console.log(error.message);
-      return { timestamp: 0, price: 0, coin_id };
+      toast.add({ title: "error", description: error.message });
+      return { timestamp: 0, price: 0, coin_id, error: error.message};
     }
   };
 }

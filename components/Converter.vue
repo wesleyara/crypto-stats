@@ -4,6 +4,8 @@ import { ApiService } from "../services/ApiService";
 import { FormatService } from "../services/FormatService";
 import type { ConvertedMarketChartData } from "../types";
 
+const toast = useToast()
+
 const apiService = new ApiService();
 const formatService = new FormatService();
 
@@ -20,6 +22,7 @@ const data = ref<ConvertedMarketChartData | null>(
 const fetchPrice = async () => {
   const response = await apiService.getCurrentPrice({
     coin_id: inputSelectCurrencyValue.value,
+    toast,
   });
 
   if (!response) return;
@@ -67,7 +70,7 @@ const handleCurrencyChange = async (event: Event) => {
 
   if (name === "inputSelectCurrencyValue") {
     inputSelectCurrencyValue.value = value;
-    const response = await apiService.getCurrentPrice({ coin_id: value });
+    const response = await apiService.getCurrentPrice({ coin_id: value, toast });
 
     outputCurrency.value = (response?.price).toLocaleString() || "1";
     data.value = response;
@@ -87,11 +90,18 @@ const handleDateChange = async (event: Event) => {
   dateInput.value = value;
   const response = await apiService.getCurrentPrice({
     coin_id: inputSelectCurrencyValue.value,
+    toast,
     dateStr: value,
   });
 
   outputCurrency.value = (response?.price).toLocaleString() || "1";
   data.value = response;
+};
+
+const handleClear = async () => {
+  dateInput.value = "";
+  inputCurrency.value = "1";
+  await fetchPrice();
 };
 </script>
 
@@ -134,7 +144,7 @@ const handleDateChange = async (event: Event) => {
             />
             <button
               v-if="dateInput.length > 0"
-              @click="dateInput = ''"
+              @click="handleClear"
               class="btn rounded-md px-3 py-2"
             >
               Clear
