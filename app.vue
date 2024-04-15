@@ -23,11 +23,13 @@ useHead({
 </script>
 
 <template>
-  <div>
-    <NuxtPage />
+  <ClientOnly>
+    <div>
+      <NuxtPage />
 
-    <UNotifications />
-  </div>
+      <UNotifications />
+    </div>
+  </ClientOnly>
 </template>
 
 <style lang="scss">

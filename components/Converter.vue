@@ -4,7 +4,7 @@ import { ApiService } from "../services/ApiService";
 import { FormatService } from "../services/FormatService";
 import type { ConvertedMarketChartData } from "../types";
 
-const toast = useToast()
+const toast = useToast();
 
 const apiService = new ApiService();
 const formatService = new FormatService();
@@ -12,8 +12,8 @@ const formatService = new FormatService();
 const inputSelectCurrencyValue = ref("bitcoin");
 const outputSelectCurrencyValue = ref("USD");
 
-const inputCurrency = ref("1");
-const outputCurrency = ref("0");
+const inputCurrency = ref(1);
+const outputCurrency = ref(0);
 const dateInput = ref("");
 const data = ref<ConvertedMarketChartData | null>(
   {} as ConvertedMarketChartData,
@@ -27,7 +27,7 @@ const fetchPrice = async () => {
 
   if (!response) return;
 
-  outputCurrency.value = (response?.price).toLocaleString() || "1";
+  outputCurrency.value = response?.price || 0;
   data.value = response;
 };
 
@@ -46,21 +46,17 @@ onMounted(async () => {
 });
 
 const handleValueChange = (event: Event) => {
-  const value = (event.target as HTMLInputElement).value.replace(/\D/g, "");
+  const value = (event.target as HTMLInputElement).value;
   const name = (event.target as HTMLInputElement).name;
 
   if (!data.value) return;
 
   if (name === "inputCurrency") {
-    inputCurrency.value = value.toLocaleString() || "1";
-    outputCurrency.value = (
-      +inputCurrency.value * data.value.price
-    ).toLocaleString();
+    inputCurrency.value = +value;
+    outputCurrency.value = +value * data.value.price;
   } else {
-    outputCurrency.value = value.toLocaleString();
-    inputCurrency.value = (
-      +outputCurrency.value / data.value.price
-    ).toLocaleString();
+    outputCurrency.value = +value;
+    inputCurrency.value = +value / data.value.price
   }
 };
 
@@ -70,9 +66,12 @@ const handleCurrencyChange = async (event: Event) => {
 
   if (name === "inputSelectCurrencyValue") {
     inputSelectCurrencyValue.value = value;
-    const response = await apiService.getCurrentPrice({ coin_id: value, toast });
+    const response = await apiService.getCurrentPrice({
+      coin_id: value,
+      toast,
+    });
 
-    outputCurrency.value = (response?.price).toLocaleString() || "1";
+    outputCurrency.value = response?.price || 0
     data.value = response;
   }
 };
@@ -94,13 +93,13 @@ const handleDateChange = async (event: Event) => {
     dateStr: value,
   });
 
-  outputCurrency.value = (response?.price).toLocaleString() || "1";
+  outputCurrency.value = response?.price || 0;
   data.value = response;
 };
 
 const handleClear = async () => {
   dateInput.value = "";
-  inputCurrency.value = "1";
+  inputCurrency.value = 1;
   await fetchPrice();
 };
 </script>
@@ -108,18 +107,18 @@ const handleClear = async () => {
 <template>
   <section id="converter" class="bg-big-stone-900">
     <div class="window-width mx-auto flex flex-col items-center py-10">
-      <h2 class="mb-10">Currency Converter</h2>
+      <h2 class="mb-10 text-center">Currency Converter</h2>
 
       <span
         class="flex w-full flex-col items-center justify-center gap-5 sm:flex-row sm:gap-10"
       >
         <span class="flex flex-col gap-2 text-center sm:text-start">
-          <h4>
+          <span class="text-3xl font-bold">
             {{
               coinList?.find(item => inputSelectCurrencyValue === item.value)
                 ?.label
             }}/{{ outputSelectCurrencyValue }}
-          </h4>
+          </span>
           <span class="text-center">
             {{ inputCurrency?.toLocaleString() }}
             {{
@@ -133,11 +132,12 @@ const handleClear = async () => {
         </span>
 
         <span class="flex flex-col">
-          Select a date:
+          <label for="dateInput">Select a date:</label>
 
           <span class="flex gap-1">
             <input
               class="rounded-md bg-[#ebebeb]"
+              name="dateInput"
               type="datetime-local"
               @change="handleDateChange"
               v-model="dateInput"
@@ -174,20 +174,20 @@ const handleClear = async () => {
 
           <input
             class="w-full rounded-r"
-            type="text"
+            type="number"
             name="inputCurrency"
             v-model="inputCurrency"
             @input="handleValueChange"
           />
         </span>
 
-        <h4>=</h4>
+        <span class="text-3xl font-bold">=</span>
 
         <span class="flex">
           <input
             class="w-full rounded-l"
             name="outputCurrency"
-            type="text"
+            type="number"
             v-model="outputCurrency"
             @input="handleValueChange"
           />

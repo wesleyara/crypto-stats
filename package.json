@@ -18,6 +18,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.2",
     "@testing-library/vue": "^8.0.3",
     "@vueuse/nuxt": "^10.9.0",
     "nuxt": "^3.11.2",

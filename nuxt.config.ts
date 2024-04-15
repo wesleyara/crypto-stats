@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@vueuse/nuxt",
     "@nuxt/ui",
+    "@formkit/auto-animate/nuxt",
   ],
   googleFonts: {
     families: {
@@ -20,4 +21,4 @@ export default defineNuxtConfig({
       API_ENDPOINT: process.env.API_ENDPOINT,
     },
   },
-})
+});

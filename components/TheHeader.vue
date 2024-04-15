@@ -23,7 +23,7 @@ const handleScrollToId = (id: string) => {
       <h4 class="text-white">CryptoStats</h4>
     </span>
 
-    <span class="flex">
+    <span class="hidden s:flex">
       <span
         v-for="item of linkMap"
         :key="item.label"
