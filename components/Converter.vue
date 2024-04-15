@@ -12,17 +12,32 @@ const inputCurrency = ref(1);
 const outputCurrency = ref(0);
 
 const dateInput = ref("");
+const refresh = ref(false);
 const params = ref({ id: inputSelectCurrencyValue, date: dateInput });
 
 const { data, pending, error } = useFetch<ConvertedMarketChartData>(
   `/api/market`,
   {
     params,
-    watch: [params],
+    watch: [params, refresh],
+    onRequestError: error => {
+      toast.add({
+        title: "Error",
+        description: `${error}`,
+      });
+    },
+    retry: 3,
+    retryDelay: 5000,
   },
 );
 
 const lastUpdate = ref(formatDate(data.value?.timestamp || Date.now()));
+
+onMounted(() => {
+  setInterval(() => {
+    refresh.value = !refresh.value;
+  }, 30000);
+});
 
 watchEffect(() => {
   if (data.value) {
