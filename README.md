@@ -1,75 +1,68 @@
-# Nuxt 3 Minimal Starter
+# Crypto Stats
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Crypto Stats is a simple converter for cryptocurrencies. It uses the CoinGecko API to get the latest data.
 
-## Setup
+## Screenshots
 
-Make sure to install the dependencies:
+![Preview](./public/preview.png)
 
-```bash
-# npm
-npm install
+[Preview](https://crypto-stats-three-tau.vercel.app/)
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+## Installation
 
 ```bash
-# npm
-npm run dev
+# first clone the repository
+git clone https://github.com/wesleyara/crypto-stats
 
-# pnpm
-pnpm run dev
+# enter the project directory
+cd crypto-stats
 
-# yarn
-yarn dev
+# install the dependencies
+npm install 
+# or
+yarn
+``` 
 
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
+## Usage
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+# run the project
+npm start
+# or
+yarn start
 ```
 
-Locally preview production build:
+### Docker
+
+For this project, you can also use Docker. Just run the following commands:
 
 ```bash
-# npm
-npm run preview
+# build the image
+docker build -t crypto-stats .
 
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+# run the container
+docker run -d -p 3000:3000 --name crypto-stats crypto-stats
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Technologies and tools
+
+- [Nuxt.js](https://nuxtjs.org/) for the frontend
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [Nuxt UI](https://ui.nuxt.com/) for the UI components
+- [Vueuse](https://vueuse.org/) for the composition API
+- [Eslint](https://eslint.org/) for linting
+- [Prettier](https://prettier.io/) for code formatting
+- [Vitest](https://vitejs.dev/guide/) for testing
+- [CoinGecko API](https://www.coingecko.com/en/api) for the data
+- [Docker](https://www.docker.com/) for containerization
+- [/server](./server) for the backend api
+
+## Explain about the project
+
+To create the project, I first organized the entire repository, installed the necessary dependencies and the tools that would help me with the code, such as eslint and prettier. I configured some Nuxt modules to assist in development.
+
+From there I created the first screen components, to have a user-friendly front end. After that I started doing the feature part, I made use of composables and several features present within nuxt itself.
+
+To be able to better manage the data in /utils, I created some functions that formatted different values ​​for me, in addition to finding the most accurate values ​​for the api to return when a date was input, for example, with this I merged it with the /server directory and created a small backend that served as middleware to manage the data coming from the api.
+
+Every application was designed with the best way to provide maintenance, always simplifying the data and working with the idea of ​​function.
