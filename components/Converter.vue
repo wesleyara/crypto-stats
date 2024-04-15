@@ -37,7 +37,7 @@ onMounted(async () => {
     .catch(err => console.error(err));
   setInterval(
     () =>
-      !dateInput &&
+      dateInput.value.length === 0 &&
       fetchPrice()
         .then()
         .catch(err => console.error(err)),
