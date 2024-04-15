@@ -4,8 +4,8 @@ useSeoMeta({
   description: "A simple way to track your Cryptocurrency stats",
   ogTitle: "CryptoStats",
   ogDescription: "A simple way to track your Cryptocurrency stats",
-  ogImage: "https://wesleyaraujo.dev/favicon.png",
-  ogImageUrl: "https://wesleyaraujo.dev/favicon.png",
+  ogImage: "https://crypto-stats-three-tau.vercel.app/favicon.png",
+  ogImageUrl: "https://crypto-stats-three-tau.vercel.app/favicon.png",
 });
 
 useHead({
