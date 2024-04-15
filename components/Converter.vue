@@ -3,7 +3,7 @@ import { coinList } from "../utils/constants";
 import { getCurrentDate, formatDate } from "../utils";
 import type { ConvertedMarketChartData } from "../types";
 
-// const toast = useToast();
+const toast = useToast();
 
 const inputSelectCurrencyValue = ref("bitcoin");
 const outputSelectCurrencyValue = ref("USD");
@@ -62,7 +62,10 @@ const handleDateChange = async (event: Event) => {
 
   if (date > new Date()) {
     dateInput.value = getCurrentDate();
-    return alert("Please select a date in the past");
+    toast.add({
+      title: "Invalid Date",
+      description: "Please select a date in the past",
+    });
   }
 
   dateInput.value = value;
@@ -116,7 +119,7 @@ const handleClear = async () => {
             <button
               v-if="dateInput?.length > 0"
               @click="handleClear"
-              class="rounded-md px-3 py-2 bg-emerald-500 text-black"
+              class="rounded-md bg-emerald-500 px-3 py-2 text-black"
             >
               Clear
             </button>

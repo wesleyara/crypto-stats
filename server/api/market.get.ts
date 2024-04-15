@@ -1,4 +1,4 @@
-import axios from "axios";
+import { MarketChartData } from "~/types";
 import {
   convertArrayToObjects,
   findClosestTimestamp,
@@ -15,9 +15,7 @@ export default defineEventHandler(async event => {
 
   const url = `https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=usd&from=${timestampLessThirtyMinutes}&to=${timestampMoreThirtyMinutes}`;
 
-  const response = await axios.get(url);
-
-  const data = response.data;
+  const data = await $fetch<MarketChartData>(url);
 
   const prices = convertArrayToObjects(data.prices);
   const closestPrice = findClosestTimestamp(prices, timestamp);

@@ -21,7 +21,6 @@
     "@formkit/auto-animate": "^0.8.2",
     "@testing-library/vue": "^8.0.3",
     "@vueuse/nuxt": "^10.9.0",
-    "axios": "^1.6.8",
     "nuxt": "^3.11.2",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
