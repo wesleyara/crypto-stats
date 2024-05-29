@@ -36,39 +36,19 @@ export function findClosestTimestamp (
   return closestElement || null;
 };
 
-export function getCurrentDate (str?: Date) {
-  const date = str || new Date();
-
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-
-  return `${year}-${month}-${day}T${hours}:${minutes}`;
-};
-
-export function getTimestampFromDate (dateStr: string) {
-  const [datePart, timePart] = dateStr.split("T");
-
-  const [year, month, day] = datePart.split("-").map(Number);
-
-  const [hour, minute] = timePart.split(":").map(Number);
-
-  const dateObject = new Date(year, month - 1, day, hour, minute);
-
-  const dateTimestamp = Math.floor(dateObject.getTime() / 1000);
-  const dateTimestampLessThirtyMinutes = dateTimestamp - 1200;
-  const dateTimestampMoreThirtyMinutes = dateTimestamp + 1200;
+export function getTimestampFromDate (dateStr: Date) {
+  const dateTimestamp = Math.floor(dateStr.getTime() / 1000);
+  const dateTimestampLessOneDay = dateTimestamp - 57600;
+  const dateTimestampMoreOneDay = dateTimestamp + 57600;
 
 
-  const currentTo = dateTimestampMoreThirtyMinutes * 1000 > Date.now()
+  const currentTo = dateTimestampMoreOneDay * 1000 > Date.now()
   ? dateTimestamp
-  : dateTimestampMoreThirtyMinutes;
+  : dateTimestampMoreOneDay;
 
   return {
     timestamp: dateTimestamp * 1000,
-    timestampMoreThirtyMinutes: currentTo,
-    timestampLessThirtyMinutes: dateTimestampLessThirtyMinutes,
+    timestampMoreOneDay: currentTo,
+    timestampLessOneDay: dateTimestampLessOneDay,
   };
 };
