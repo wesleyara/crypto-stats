@@ -30,4 +30,8 @@ export const linkMap = [
     label: "Converter",
     href: "converter",
   },
+  {
+    label: "Graph",
+    href: "chart",
+  }
 ]
