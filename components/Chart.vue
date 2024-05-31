@@ -45,7 +45,7 @@ const handleExecute = () => {
 </script>
 
 <template>
-  <section class="window-width mx-auto my-10 flex flex-col gap-4">
+  <section id="chart" class="window-width mx-auto my-10 flex flex-col gap-4">
     <h2>Graph of the last 15 days</h2>
     <template v-if="!error">
       <span className="flex flex-col gap-2">
