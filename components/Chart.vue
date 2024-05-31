@@ -47,7 +47,7 @@ const handleExecute = () => {
 <template>
   <section class="window-width mx-auto my-10 flex flex-col gap-4">
     <h2>Graph of the last 15 days</h2>
-    <template v-if="!pending && !error">
+    <template v-if="!error">
       <span className="flex flex-col gap-2">
         <span>Select the crypto</span>
         <select
@@ -66,7 +66,7 @@ const handleExecute = () => {
           </option>
         </select>
       </span>
-      <Responsive class="w-full">
+      <Responsive v-if="!pending" class="w-full">
         <template #main="{ width }">
           <Chart :size="{ width, height: 420 }" :data="data">
             <template #layers>
@@ -76,6 +76,8 @@ const handleExecute = () => {
         </template>
       </Responsive>
     </template>
+
+    <span className="text-center h-[420px] text-2xl" v-if="pending">Loading...</span>
 
     <ApiError v-if="error" :handleRetry="handleExecute" />
   </section>
