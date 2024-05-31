@@ -6,5 +6,6 @@
     <HomeFrame />
     <Converter />
     <Chart />
+    <TheFooter />
   </div>
 </template>
