@@ -38,7 +38,8 @@ const {
   onRequestError: error => {
     toast.add({
       title: "Error",
-      description: `${error.error.message}`,
+      description: `Failed to fetch data. The API received too many requests. Please try again
+      later.`,
     });
   },
   onResponse: response => {
@@ -216,7 +217,7 @@ const handleExecute = async () => {
         </span>
       </section>
 
-      <ApiError v-if="error" :handleExecute="handleExecute" />
+      <ApiError v-if="error" :handleRetry="handleExecute" />
     </div>
   </section>
 </template>

@@ -5,5 +5,6 @@
     <TheHeader />
     <HomeFrame />
     <Converter />
+    <Chart />
   </div>
 </template>
