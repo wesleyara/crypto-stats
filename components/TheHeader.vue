@@ -36,4 +36,3 @@ const handleScrollToId = (id: string) => {
   </header>
 </template>
 
-// material-symbols:clear-day-rounded
